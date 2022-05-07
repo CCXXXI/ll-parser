@@ -1,0 +1,177 @@
+"{
+ ID = NUM ;
+}","program
+	compoundstmt
+		{
+		stmts
+			stmt
+				assgstmt
+					ID
+					=
+					arithexpr
+						multexpr
+							simpleexpr
+								NUM
+							multexprprime
+								E
+						arithexprprime
+							E
+					;
+			stmts
+				E
+		}"
+"{
+ID = ID + NUM ;
+}","program
+	compoundstmt
+		{
+		stmts
+			stmt
+				assgstmt
+					ID
+					=
+					arithexpr
+						multexpr
+							simpleexpr
+								ID
+							multexprprime
+								E
+						arithexprprime
+							+
+							multexpr
+								simpleexpr
+									NUM
+								multexprprime
+									E
+							arithexprprime
+								E
+					;
+			stmts
+				E
+		}"
+"{
+while ( ID == NUM )
+{
+ID = NUM
+}
+}","语法错误,第4行,缺少"";""
+program
+	compoundstmt
+		{
+		stmts
+			stmt
+				whilestmt
+					while
+					(
+					boolexpr
+						arithexpr
+							multexpr
+								simpleexpr
+									ID
+								multexprprime
+									E
+							arithexprprime
+								E
+						boolop
+							==
+						arithexpr
+							multexpr
+								simpleexpr
+									NUM
+								multexprprime
+									E
+							arithexprprime
+								E
+					)
+					stmt
+						compoundstmt
+							{
+							stmts
+								stmt
+									assgstmt
+										ID
+										=
+										arithexpr
+											multexpr
+												simpleexpr
+													NUM
+												multexprprime
+													E
+											arithexprprime
+												E
+										;
+								stmts
+									E
+							}
+			stmts
+				E
+		}"
+"{
+if ( ID == ID )
+then
+ID = NUM ;
+else
+ID = ID * NUM ;
+}","program
+	compoundstmt
+		{
+		stmts
+			stmt
+				ifstmt
+					if
+					(
+					boolexpr
+						arithexpr
+							multexpr
+								simpleexpr
+									ID
+								multexprprime
+									E
+							arithexprprime
+								E
+						boolop
+							==
+						arithexpr
+							multexpr
+								simpleexpr
+									ID
+								multexprprime
+									E
+							arithexprprime
+								E
+					)
+					then
+					stmt
+						assgstmt
+							ID
+							=
+							arithexpr
+								multexpr
+									simpleexpr
+										NUM
+									multexprprime
+										E
+								arithexprprime
+									E
+							;
+					else
+					stmt
+						assgstmt
+							ID
+							=
+							arithexpr
+								multexpr
+									simpleexpr
+										ID
+									multexprprime
+										*
+										simpleexpr
+											NUM
+										multexprprime
+											E
+								arithexprprime
+									E
+							;
+			stmts
+				E
+		}"

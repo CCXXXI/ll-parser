@@ -9,6 +9,10 @@ class LLParserTest {
     @CsvFileSource(resources = ["data.csv"])
     fun test(input: String, expected: String) {
         val parser = Java_LLParserAnalysis.LLParser(LineNumberReader(StringReader(input)))
-        assertEquals(expected.trim(), parser.parse().toString().trim())
+        val result = parser.parse().toString().trim()
+        val error = parser.errorMessages.toString()
+        assertEquals(
+            expected.trim(), error + result
+        )
     }
 }

@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 
 public class Java_LLParserAnalysis {
   public static void main(String[] args) throws IOException, LLParser.SyntaxError {
-    final LLParser llParser = new LLParser(new LineNumberReader(new InputStreamReader(System.in)));
-    System.out.println(llParser.parse());
+    final LLParser parser = new LLParser(new LineNumberReader(new InputStreamReader(System.in)));
+    final String result = parser.parse().toString();
+    final String error = parser.errorMessages.toString();
+    System.out.println(error + result);
   }
 
   @SuppressWarnings({"SpellCheckingInspection", "ArraysAsListWithZeroOrOneArgument"})
@@ -167,6 +169,7 @@ public class Java_LLParserAnalysis {
     }
     // endregion
 
+    public final StringBuilder errorMessages = new StringBuilder();
     private final LineNumberReader reader;
     private Scanner scanner;
     private String currentSymbol;
@@ -228,22 +231,35 @@ public class Java_LLParserAnalysis {
       }
 
       public void build() throws SyntaxError, IOException {
-        if (currentSymbol == null) {
-          throw new SyntaxError("Unexpected end of file.");
-        }
-        if (isTerminal()) {
-          if (symbol.equals(currentSymbol)) {
-            nextSymbol();
+        try {
+          if (currentSymbol == null) {
+            throw new SyntaxError("Unexpected end of file.");
+          }
+          if (isTerminal()) {
+            if (symbol.equals(currentSymbol)) {
+              nextSymbol();
+            } else {
+              throw new SyntaxError("Expected " + symbol + " but got " + currentSymbol);
+            }
+          } else { // non-terminal
+            final List<String> children = transitions.get(symbol).get(currentSymbol);
+            if (children == null) {
+              throw new SyntaxError("Unexpected symbol " + currentSymbol);
+            }
+            for (String child : children) {
+              addChild(child);
+            }
+          }
+        } catch (SyntaxError e) {
+          if (isNullable()) {
+            addChild("");
           } else {
-            throw new SyntaxError("Expected " + symbol + " but got " + currentSymbol);
-          }
-        } else { // non-terminal
-          final List<String> children = transitions.get(symbol).get(currentSymbol);
-          if (children == null) {
-            throw new SyntaxError("Unexpected symbol " + currentSymbol);
-          }
-          for (String child : children) {
-            addChild(child);
+            errorMessages
+                .append("语法错误,第")
+                .append(reader.getLineNumber() - 1)
+                .append("行,缺少\"")
+                .append(symbol)
+                .append("\"\n");
           }
         }
       }

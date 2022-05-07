@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.NotNull;
 
 public class Java_LLParserAnalysis {
   public static void main(String[] args) throws IOException, LLParser.SyntaxError {
@@ -168,11 +167,11 @@ public class Java_LLParserAnalysis {
     }
     // endregion
 
-    @NotNull private final LineNumberReader reader;
+    private final LineNumberReader reader;
     private Scanner scanner;
     private String currentSymbol;
 
-    public LLParser(@NotNull LineNumberReader reader) {
+    public LLParser(LineNumberReader reader) {
       this.reader = reader;
     }
 
@@ -209,16 +208,16 @@ public class Java_LLParserAnalysis {
     }
 
     public class SymbolNode {
-      @NotNull private final String symbol;
-      @NotNull private final List<SymbolNode> children;
+      private final String symbol;
+      private final List<SymbolNode> children;
 
-      public SymbolNode(@NotNull String symbol) {
+      public SymbolNode(String symbol) {
         this.symbol = symbol;
         this.children = new ArrayList<>();
       }
 
       /** Add a symbol as child and build it. */
-      private void addChild(@NotNull String symbol) throws SyntaxError, IOException {
+      private void addChild(String symbol) throws SyntaxError, IOException {
         if (symbol.isEmpty()) {
           children.add(new SymbolNode("E"));
         } else {

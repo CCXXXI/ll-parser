@@ -208,7 +208,7 @@ public class Java_LLParserAnalysis {
       }
     }
 
-    private class SymbolNode {
+    public class SymbolNode {
       @NotNull private final String symbol;
       @NotNull private final List<SymbolNode> children;
 

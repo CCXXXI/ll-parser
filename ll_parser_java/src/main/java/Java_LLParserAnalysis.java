@@ -1,10 +1,9 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
 public class Java_LLParserAnalysis {
   public static void main(String[] args) throws IOException, SyntaxError {

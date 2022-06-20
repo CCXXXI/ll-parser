@@ -1,4 +1,4 @@
-# Lexical Analysis
+# LL Parser
 
 [![GitHub license](https://img.shields.io/github/license/ccxxxi/ll-parser)](LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/ccxxxi/ll-parser)](../../commits)
